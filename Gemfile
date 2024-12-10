@@ -60,4 +60,3 @@ group :development do
   gem "web-console"
   gem "dotenv-rails"
 end
-
