@@ -22,7 +22,7 @@ RSpec.describe User, type: :model do
 
   # issue #6 -Enforce password rules
   it "is invalid if the password is shorter than 8 characters" do
-    user = build(:user, password: "short")
+    user = build(:user, password: "$hort")
     expect(user).to_not be_valid
   end
 
