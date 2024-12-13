@@ -40,4 +40,25 @@ RSpec.describe User, type: :model do
     user = build(:user, password: "Pasw0rd!")
     expect(user).to be_valid
   end
+
+  # test validation
+  it "is valid with a password '223344##'" do
+    user = build(:user, password: "223344##")
+    expect(user).to be_valid
+  end
+
+  it "is invalid with a password '222344##'" do
+    user = build(:user, password: "222344##")
+    expect(user).to_not be_valid
+  end
+
+  it "is valid with a password '@#%&#€›kl3'" do
+    user = build(:user, password: "@#%&#€›kl3")
+    expect(user).to be_valid
+  end
+
+  it "is invalid with a password '`jlk34l2dfDes351'" do
+    user = build(:user, password: "`jlk34l2dfDes351")
+    expect(user).to_not be_valid
+  end
 end
