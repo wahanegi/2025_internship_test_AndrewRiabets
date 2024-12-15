@@ -57,8 +57,8 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
-  it "is invalid with a password '`jlk34l2dfDes351'" do
-    user = build(:user, password: "`jlk34l2dfDes351")
+  it "is invalid with a password 'jlk34l2dfDes351'" do
+    user = build(:user, password: "jlk34l2dfDes351")
     expect(user).to_not be_valid
   end
 end
