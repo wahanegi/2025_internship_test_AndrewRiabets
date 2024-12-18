@@ -6,7 +6,8 @@ const TweetInput = ({ onTweetSubmit }) => {
 
   const handleInput = (e) => {
     setText(e.target.value);
-    textareaRef.current.style.height = `${textarea.scrollHeight}px`;
+    const textarea = textareaRef.current;
+    textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
   const handleSubmit = (e) => {
