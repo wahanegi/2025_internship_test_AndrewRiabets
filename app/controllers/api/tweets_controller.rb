@@ -18,8 +18,9 @@ class Api::TweetsController < ApplicationController
   end
 
   def destroy
-    if @tweet.user == current_user
-      @tweet.destroy
+    return if @tweet.user_id != current_user.id
+
+    if @tweet.destroy
       head :no_content, notice: "Tweet was successfully destroyed."
     else
       render json: { errors: @tweet.errors.full_messages }, status: 422
