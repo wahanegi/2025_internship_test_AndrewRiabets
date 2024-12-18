@@ -6,12 +6,14 @@ import TweetList from './TweetList';
 
 const Homepage = () => {
   const [tweets, setTweets] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const fetchTweets = async () => {
     try {
       const response = await axios.get('api/tweets');
-      setTweets(response.data);
+      setTweets(response.data.tweets);
+      setCurrentUserId(response.data.current_user_id);
     } catch (error) {
       console.error('Error fetching tweets:', error);
     } finally {
@@ -52,7 +54,11 @@ const Homepage = () => {
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : (
-        <TweetList tweets={tweets} onDeleteTweet={deleteTweet} />
+        <TweetList
+          tweets={tweets}
+          onDeleteTweet={deleteTweet}
+          currentUserId={currentUserId}
+        />
       )}
     </div>
   );

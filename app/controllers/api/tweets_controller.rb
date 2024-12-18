@@ -4,8 +4,11 @@ class Api::TweetsController < ApplicationController
 
 
   def index
-      tweets = Tweet.includes(:user).order(created_at: :desc)
-      render json: tweets.as_json(include: { user: { only: [ :email ] } }, only: [ :id, :text, :created_at ])
+    tweets = Tweet.includes(:user).order(created_at: :desc)
+    render json: {
+      tweets: tweets.as_json(include: { user: { only: [ :email, :id ] } }, only: [ :id, :text, :created_at ]),
+      current_user_id: current_user.id
+    }
   end
 
   def create
@@ -18,8 +21,6 @@ class Api::TweetsController < ApplicationController
   end
 
   def destroy
-    return if @tweet.user_id != current_user.id
-
     if @tweet.destroy
       head :no_content, notice: "Tweet was successfully destroyed."
     else
@@ -34,7 +35,7 @@ class Api::TweetsController < ApplicationController
   end
 
   def set_tweet
-    @tweet = Tweet.find_by(id: params[:id])
+    @tweet = current_user.tweets.find_by(id: params[:id])
     unless @tweet
       render json: { error: "Tweet not found" }, status: 404
     end
