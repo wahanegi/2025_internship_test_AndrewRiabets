@@ -8,6 +8,7 @@ import LogoutButton from './LogoutButton';
 const Homepage = () => {
   const [tweets, setTweets] = useState([]);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [emailConfirmed, setEmailConfirmed] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const fetchTweets = async () => {
@@ -15,6 +16,7 @@ const Homepage = () => {
       const response = await axios.get('api/tweets');
       setTweets(response.data.tweets);
       setCurrentUserId(response.data.current_user_id);
+      setEmailConfirmed(response.data.email_confirmed);
     } catch (error) {
       console.error('Error fetching tweets:', error);
     } finally {
@@ -52,15 +54,33 @@ const Homepage = () => {
     <div className="container">
       <LogoutButton />
       <h1 className="text-center my-4">Twitterless</h1>
-      <TweetInput onTweetSubmit={addTweet} />
       {loading ? (
         <p className="text-center">Loading...</p>
       ) : (
-        <TweetList
-          tweets={tweets}
-          onDeleteTweet={deleteTweet}
-          currentUserId={currentUserId}
-        />
+        <div>
+          {emailConfirmed ? (
+            <>
+              <TweetInput onTweetSubmit={addTweet} />
+              <TweetList
+                tweets={tweets}
+                onDeleteTweet={deleteTweet}
+                currentUserId={currentUserId}
+              />
+            </>
+          ) : (
+            <>
+              <p className="text-center text-danger">
+                To create tweets, please confirm your email. A confirmation link
+                has been sent to your registered email address.
+              </p>
+              <TweetList
+                tweets={tweets}
+                onDeleteTweet={deleteTweet}
+                currentUserId={currentUserId}
+              />
+            </>
+          )}
+        </div>
       )}
     </div>
   );

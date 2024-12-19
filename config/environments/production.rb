@@ -57,8 +57,19 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  # Set host to be used by links generated in mailer templates.я
+  config.action_mailer.default_url_options = { host: 'internship-project-andrewriabe-362dff5509b5.herokuapp.com' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV['MAILTRAP_USERNAME'],
+    password: ENV['MAILTRAP_PASSWORD'],
+    address: 'smtp.mailtrap.io',
+    domain: 'smtp.mailtrap.io',
+    port: '587',
+    authentication: :cram_md5
+  }
+  config.action_mailer.default_url_options = { host: 'internship-project-andrewriabe-362dff5509b5.herokuapp.com' }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   # config.action_mailer.smtp_settings = {

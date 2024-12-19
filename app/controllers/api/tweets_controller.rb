@@ -7,7 +7,8 @@ class Api::TweetsController < ApplicationController
     tweets = Tweet.includes(:user).order(created_at: :desc)
     render json: {
       tweets: tweets.as_json(include: { user: { only: [ :email, :id ] } }, only: [ :id, :text, :created_at ]),
-      current_user_id: current_user.id
+      current_user_id: current_user.id,
+      email_confirmed: current_user.confirmed?
     }
   end
 

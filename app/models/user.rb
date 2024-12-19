@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable
 
+    def active_for_authentication?
+        super || !confirmed?
+    end
+
   has_many :tweets, dependent: :destroy
 
   validates :email,
