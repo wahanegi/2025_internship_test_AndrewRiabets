@@ -3,6 +3,7 @@ import axios from 'axios';
 import createCsrfToken from '../utils/csrf';
 import TweetInput from './TweetInput';
 import TweetList from './TweetList';
+import LogoutButton from './LogoutButton';
 
 const Homepage = () => {
   const [tweets, setTweets] = useState([]);
@@ -49,6 +50,7 @@ const Homepage = () => {
 
   return (
     <div className="container">
+      <LogoutButton />
       <h1 className="text-center my-4">Twitterless</h1>
       <TweetInput onTweetSubmit={addTweet} />
       {loading ? (
