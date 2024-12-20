@@ -15,7 +15,7 @@ class Api::TweetsController < ApplicationController
   def create
     tweet = current_user.tweets.new(tweet_params)
     if tweet.save
-      render json: tweet.as_json(include: { user: { only: [ :email ] } }, only: [ :id, :text, :created_at ]), status: :created
+      render json: tweet.as_json(include: { user: { only: [ :email, :id ] } }, only: [ :id, :text, :created_at ]), status: :created
     else
       render json: { errors: tweet.errors.full_messages }, status: 422
     end
