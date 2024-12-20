@@ -58,7 +58,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: 'internship-project-andrewriabe-362dff5509b5.herokuapp.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: ENV['DOMAIN_URL'] }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
