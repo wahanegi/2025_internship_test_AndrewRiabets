@@ -6,7 +6,18 @@ class Api::TweetsController < ApplicationController
   def index
     tweets = Tweet.includes(:user).order(created_at: :desc)
     render json: {
-      tweets: tweets.as_json(include: { user: { only: [ :email, :id ] } }, only: [ :id, :text, :created_at ]),
+      tweets: tweets.as_json(
+        include: { 
+          user: { only: [ :email, :id ] },
+          likes: { only: [:user_id] } 
+          }, 
+          only: [ :id, :text, :created_at ]
+          ).map do |tweet| 
+            tweet.merge(
+              likes_count: tweet["likes"].size,
+              liked_by_current_user: tweet["likes"].any? { |like| like["user_id"] == current_user.id }
+            )
+          end,
       current_user_id: current_user.id,
       email_confirmed: current_user.confirmed?
     }
@@ -36,9 +47,9 @@ class Api::TweetsController < ApplicationController
   end
 
   def set_tweet
-    @tweet = current_user.tweets.find_by(id: params[:id])
+  @tweet = Tweet.find_by(id: params[:tweet_id])
     unless @tweet
-      render json: { error: "Tweet not found" }, status: 404
+      render json: { error: "Tweet not found" }, status: :not_found
     end
   end
 end

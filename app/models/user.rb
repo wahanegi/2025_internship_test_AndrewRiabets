@@ -10,6 +10,8 @@ class User < ApplicationRecord
     end
 
   has_many :tweets, dependent: :destroy
+  has_many :likes, dependent: :destroy
+
 
   validates :email,
       presence: true,
