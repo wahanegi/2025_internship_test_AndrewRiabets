@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :api do
-    resources :tweets, only: [ :index, :create, :destroy ]
+    resources :tweets, only: [:index, :create, :destroy] do
+      resource :like, only: [:create, :destroy]
+    end
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
