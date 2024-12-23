@@ -1,0 +1,39 @@
+Unfinished Work
+I have one entirely incomplete issue (#18) and one partially completed issue (#19). 
+The reason for not completing these tasks is the lack of time during the final weekend before the project deadline, 
+as well as concerns about potentially breaking existing functionality in a time-sensitive environment.
+
+TODO List
+To complete issues #18 and #19, the following changes are required:
+
+1. Update routes.rb:
+	- Change root "welcome#index" to root "homepage#index".
+	- Add the following routes(get "home", to: "homepage#index"; get "welcome", to: "welcome#index")
+2. Modify TweetsController:
+	- Remove the default authorization check for rendering the main content.
+	- Add authorization checks for the create and destroy methods. If the user is not authorized, return a 401 Unauthorized error.
+3. No changes are needed for LikesController, as it already includes authorization checks for creating and deleting likes.
+4. Frontend Updates:
+	- Add error handling for API calls in components. Specifically, handle 401 Unauthorized errors by redirecting the user with window.location.href = '/';
+
+Below is a list of tasks I intended and planned to implement but could not complete due to time constraints
+
+Additional Tasks
+1. Add a 404 Component for Unknown Routes:
+   Currently, the application has a root route (/), /home, and Devise routes. If a user navigates to an unknown route, they encounter a blank page. 
+	 A 404 component should be implemented to handle such cases.
+2. Error Handling:
+	Review all components to ensure that every user interaction (both in the API and on the client) has friendly error handling. 
+	Add error handling where missing.
+3. Error Notifications for Devise Forms:
+	Currently, there are no error messages displayed in Devise forms for issues like invalid login credentials or lost internet connection. 
+	Add user-friendly notifications to handle such scenarios.
+4. Write Tests for Models:
+	Create test cases for the Tweet and Like models to ensure the correctness of their behaviors.
+5. Date Validation in Tweet.jsx:
+	- The date formatting assumes that created_at will always be valid. If the value is null or in an incorrect format, the application may break. 
+	Add a check for created_at before attempting to format it.
+6. Confirmation Modal on Logout:
+	- Currently, there is no confirmation dialog when logging out, which might be inconvenient for users. 
+	Add a modal window to confirm logout actions.
+
